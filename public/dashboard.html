@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/qrcode.js"></script>
+    <script src="libs/html5-qrcode.min.js"></script>
+    <script src="js/dashboard.js"></script>
+</head>
+
+<body>
+    <div id="sidebarContainer"></div>
+
+    <div class="w3-main" id="mainContent">
+        <div class="w3-teal">
+            <div class="horizontal large-bar">
+                <h1 id="dashboardTitle">Dashboard</h1>
+                <div>
+                    <input type="image" src="imgs/scan.png" alt="QR Scan" class="icon filter-white" id="qrScanBtn">
+                    <input type="image" src="imgs/logout.png" alt="Logout" class="icon filter-white" id="logoutBtn" style="margin-left: 10px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-container container-padding" id="tabContent">
+        </div>
+    </div>
+
+    <dialog class="dialog" id="qrDialog">
+        <h3>Generate QR Code</h3>
+        <input type="text" id="qrData" placeholder="Enter data for QR code">
+        <button id="generateBtn">Generate</button>
+        <div class="qr-image" id="qrCode"></div>
+        <button id="closeQrDialog">Close</button>
+    </dialog>
+
+    <dialog class="dialog" id="qrScanDialog">
+        <h3>Scan QR Code</h3>
+        <div id="reader" style="width: 100%; overflow: hidden;"></div>
+        <p id="scanResult">Scan a QR code to see the result here.</p>
+        <button id="closeScanQrDialog">Close</button>
+    </dialog>
+
+    <dialog class="dialog" id="addStudentDialog">
+        <h3>Add Student</h3>
+        <form id="addStudentForm" enctype="multipart/form-data">
+            <input class="w3-input w3-margin-bottom" type="text" name="LRN" placeholder="LRN" required>
+            <input class="w3-input w3-margin-bottom" type="text" name="first_name" placeholder="First Name" required>
+            <input class="w3-input w3-margin-bottom" type="text" name="last_name" placeholder="Last Name" required>
+            <input class="w3-input w3-margin-bottom" type="text" name="grade_section" placeholder="Grade & Section" required>
+            <input class="w3-input w3-margin-bottom" type="file" name="photo" accept="image/*">
+            <button class="w3-button w3-green" type="submit">Save</button>
+            <button type="button" id="closeAddStudentDialog" class="w3-button w3-red">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog class="dialog" id="addTeacherDialog">
+        <h3>Add Teacher</h3>
+        <form id="addTeacherForm">
+            <input class="w3-input w3-margin-bottom" type="text" name="username" placeholder="Username" required>
+            <input class="w3-input w3-margin-bottom" type="password" name="password" placeholder="Password" required>
+            <select class="w3-select w3-margin-bottom" name="role" required>
+                <option value="" disabled selected>Choose Role</option>
+                <option value="admin">Admin</option>
+                <option value="teacher">Teacher</option>
+            </select>
+            <button class="w3-button w3-green" type="submit">Save</button>
+            <button type="button" id="closeAddTeacherDialog" class="w3-button w3-red">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog class="dialog" id="addViolationDialog">
+        <h3>Add Violation</h3>
+        <form id="addViolationForm">
+            <select class="w3-select w3-margin-bottom" name="violation_type" required>
+                <option value="" disabled selected>Choose Violation Type</option>
+                <option value="Tardiness">Tardiness</option>
+                <option value="Uniform Violation">Uniform Violation</option>
+                <option value="Misconduct">Misconduct</option>
+                <option value="Disrespect">Disrespect</option>
+                <option value="Fighting">Fighting</option>
+                <option value="Cutting Classes">Cutting Classes</option>
+                <option value="Other">Other</option>
+            </select>
+            <textarea class="w3-input w3-margin-bottom" name="description" placeholder="Description (optional)" rows="4"></textarea>
+            <button class="w3-button w3-green" type="submit">Save</button>
+            <button type="button" id="closeAddViolationDialog" class="w3-button w3-red">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog class="dialog" id="viewViolationsDialog">
+        <h3>Student Violations</h3>
+        <div id="violationsContent" style="max-height: 400px; overflow-y: auto;">
+        </div>
+        <button id="closeViewViolationsDialog" class="w3-button w3-blue">Close</button>
+    </dialog>
+    <dialog class="dialog" id="scannedStudentDialog">
+        <h3>Student Found!</h3>
+        <div id="scannedStudentInfo" style="margin-bottom: 20px;">
+            </div>
+        <button id="closeScannedStudentDialog" class="w3-button w3-red">Close</button>
+    </dialog>
+    <script>
+        document.getElementById('closeViewViolationsDialog')?.addEventListener('click', () => {
+            document.getElementById('viewViolationsDialog').close();
+        });
+    </script>
+</body>
+</html>
