@@ -95,12 +95,14 @@ function setupQRScanner() {
 
     function onScanSuccess(decodedText, decodedResult) {
         console.log(`Scanned LRN: ${decodedText}`);
-        scanDialog.close();
         
         const student = currentStudentList.find(s => s.LRN === decodedText);
 
         if (student) {
             showScannedStudentResult(student);
+            html5QrcodeScanner.disabled = true;
+            html5QrcodeScanner.clear();
+            scanDialog.close();
         } else {
             alert(`Error: Student with LRN ${decodedText} not found.`);
         }
